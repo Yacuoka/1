@@ -100,19 +100,43 @@
 
 
 
-# class Point:
-#     count = 0
-#
-#     def __init__(self, x, y):
-#         self.x = x
-#         self.y = y
-#
-#
-# p1 = Point(5, 10)
-# print(p1.x, p1.y)
-# p1.x = 100
-# p1.y = 'abc'
-# print(p1.x, p1.y)
+class Point:
+    WIDTH = 5
+
+    def __init__(self, x, y):
+        self.__x = x
+        self.__y = y
+
+
+    def __getattr__(self, item):
+        return f'В классе {__class__.__name__} отсутствует атрибут: {item}'
+
+    def __getattribute__(self, item):
+        if item == '_Point__x':
+            return  'Закрытая переменная'
+        else:
+            return object.__getattribute__(self, item)
+
+    def __setattr__(self, key, value):
+        if key == 'WIDTH':
+            raise AttributeError
+        else:
+            self.__dict__[key] = value
+
+    def area(self):
+        return self.__x * self.__y + Point.WIDTH
+
+
+
+
+p1 = Point(5, 10)
+print(p1.x, p1.y)
+p1.x = 100
+p1.y = 'abc'
+print(p1.x, p1.y)
+print(p1.zzz)
+print(p1._Point__x)
+print(p1.area())
 
 
 # Инкапсуляция
@@ -121,53 +145,53 @@
 # __x - Private
 
 
-import math
-
-class Rectangle:
-    def __init__(self, length, width):
-        self.__length = length
-        self.__width = width
-
-    def set_length(self, length):
-        self.__length = length
-
-
-    def set_width(self, width):
-        self.__width = width
-
-
-    def get_length(self):
-        return self.__length
-
-
-    def get_width(self):
-        return self.__width
-
-
-    def square(self):
-        return self.__length * self.__width
-
-
-    def perimetr(self):
-        return (self.__length + self.__width) * 2
-
-
-    def hypo(self):
-        return math.sqrt(self.__length ** 2 + self.__width ** 2)
-
-
-    def get_draw(self):
-        # for i in range(self.__length):
-        #     print(self.__width * '*')
-        print(self.__width * '*' + '\n' * self.__length)
-
-
-rec1 = Rectangle(3, 9)
-rec1.set_length(3)
-rec1.set_width(9)
-print('Длина прямоугольника: ', rec1.get_length())
-print('Ширина прямоугольника: ', rec1.get_width())
-print('Площадь: ', rec1.square())
-print('Периметр: ', rec1.perimetr())
-print('Гипотенуза: ', round(rec1.hypo()))
-rec1.get_draw()
+# import math
+#
+# class Rectangle:
+#     def __init__(self, length, width):
+#         self.__length = length
+#         self.__width = width
+#
+#     def set_length(self, length):
+#         self.__length = length
+#
+#
+#     def set_width(self, width):
+#         self.__width = width
+#
+#
+#     def get_length(self):
+#         return self.__length
+#
+#
+#     def get_width(self):
+#         return self.__width
+#
+#
+#     def square(self):
+#         return self.__length * self.__width
+#
+#
+#     def perimetr(self):
+#         return (self.__length + self.__width) * 2
+#
+#
+#     def hypo(self):
+#         return math.sqrt(self.__length ** 2 + self.__width ** 2)
+#
+#
+#     def get_draw(self):
+#         # for i in range(self.__length):
+#         #     print(self.__width * '*')
+#         print(self.__width * '*' + '\n' * self.__length)
+#
+#
+# rec1 = Rectangle(3, 9)
+# rec1.set_length(3)
+# rec1.set_width(9)
+# print('Длина прямоугольника: ', rec1.get_length())
+# print('Ширина прямоугольника: ', rec1.get_width())
+# print('Площадь: ', rec1.square())
+# print('Периметр: ', rec1.perimetr())
+# print('Гипотенуза: ', round(rec1.hypo()))
+# rec1.get_draw()
