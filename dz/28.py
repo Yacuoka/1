@@ -221,8 +221,30 @@ class Date:
         date1 = cls(day, month, year)
         return date1
 
+    @staticmethod
+    def is_date_valid(date_as_string):
+        if date_as_string.count('.') == 2:
+            day, month, year = map(int, date_as_string.split('.'))
+            return day <= 31 and month <=12 and year <= 3999
+
     def string_to_db(self):
         return f'{self.year}-{self.month}-{self.year}'
+
+dates = [
+    '30.12.2021'
+    '30-12-2020'
+    '01.01.2021'
+    '12.31.2020'
+]
+
+
+for d in dates:
+    if Date.is_date_valid(d):
+        date = Date.from_string(d)
+        db = date.string_to_db()
+        print(db)
+    else:
+        print('Неправильный формат строки с датой')
 
 
 d = Date()
@@ -231,3 +253,6 @@ print(date.string_to_db())
 d1 = Date()
 date1 = d1.from_string('15.01.2020')
 print(date1.string_to_db())
+
+
+
