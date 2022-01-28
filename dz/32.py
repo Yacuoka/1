@@ -195,11 +195,145 @@
 #         return 'Core-i7'
 
 
-class Computer:
-    def __init__(self):
-        self.name = 'PC001'
+# class Computer:
+#     def __init__(self):
+#         self.name = 'PC001'
+#         self.os = self.OS()
+#         self.cpu = self.CPU()
+#
+#     class OS:
+#         def system(self):
+#             return 'Windows 10'
+#
+#     class CPU:
+#         def make(self):
+#             return 'Intel'
+#
+#         def model(self):
+#             return 'Core-i7'
+#
+#
+# comp = Computer()
+# my_os = comp.os
+# my_cpu = comp.cpu
+#
+# print(comp.name)
+# print(my_os.system())
+# print(my_cpu.make())
+# print(my_cpu.model())
 
-    class OS:
-        def system(self):
-            return 'Windows 10'
 
+# class Base:
+#     def __init__(self):
+#         self.db = self.Inner()
+#
+#     def display(self):
+#         print('In Base Class')
+#
+#     class Inner:
+#         def display1(self):
+#             print('Inner of Base Class')
+#
+#
+# class SubClass(Base):
+#     def __init__(self):
+#         print('In Subclass')
+#         super().__init__()
+#
+#     class Inner(Base.Inner):
+#
+#         def display2(self):
+#             print('Inner of Subclass')
+#
+#
+# a = SubClass()
+# a.display()
+#
+#
+# # b = a.db
+# b = SubClass.Inner()
+# b.display1()
+# b.display2()
+
+
+# class Creature:
+#     def __init__(self, name):
+#         self.name = name
+#
+# class Animal(Creature):
+#     def sleep(self):
+#         print(self.name + ' is sleeping')
+#
+# class Pet(Creature):
+#     def play(self):
+#         print(self.name + ' is playing')
+#
+# class Dog(Animal, Pet):
+#     def bark(self):
+#         print(self.name + ' is barking')
+#
+#
+# b = Dog('Buddy')
+# b.bark()
+# b.play()
+# b.sleep()
+
+
+# class A:
+#     # def __init__(self):
+#     #     print('Инициализатор класса A')
+#     def hi(self):
+#         print('A')
+#
+# class B(A):
+#     # def __init__(self):
+#     #     print('Инициализатор класса B')
+#     def hi(self):
+#         print('B')
+#
+# class C(A):
+#     # def __init__(self):
+#     #     print('Инициализатор класса C')
+#     def hi(self):
+#         print('C')
+#
+# class D(B, C):
+#     # def __init__(self):
+#     #     print('Инициализатор класса D')
+#     pass
+#
+#
+# d = D()
+# d.hi()
+# print(D.mro())
+
+
+class Point:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f'({self.x}, {self.y})'
+
+class Styles:
+    def __init__(self, color='red', width=1):
+        print('Инициализатор Styles')
+        self._color = color
+        self._width = width
+
+class Pos:
+    def __init__(self, sp: Point, ep: Point, *args):
+        print('Инициализатор Pos')
+        self._sp = sp
+        self._ep = ep
+        Styles.__init__(self, *args)
+
+
+class Line(Pos, Styles):
+    def draw(self):
+        print(f'Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}')
+
+
+l1 = Line(Point(10, 10), Point(100, 100), 'green', 5)
+l1.draw()
