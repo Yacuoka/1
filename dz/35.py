@@ -156,3 +156,79 @@
 # s1 = StripsChars('?.!,$ ')
 # print(s1(' ?Hello World! '))
 
+
+# class MyDecorator:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self):
+#         print('перед вызовом функции')
+#         self.func()
+#         print('после вызова функции')
+#
+#
+# @MyDecorator
+# def function():
+#     print('func')
+#
+#
+# function()
+
+
+# class MyDecorator:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, a, b):
+#         print('перед вызовом функции')
+#         res = self.func(a, b)
+#         print('после вызова функции')
+#         return res
+#
+#
+# @MyDecorator
+# def function(a, b):
+#     return a * b
+#
+#
+# print(function(2, 5))
+
+
+# class Power:
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, a, b):
+#         res = self.func(a, b)
+#         return res ** 2
+#
+#
+# @Power
+# def function(a, b):
+#     return a * b
+#
+#
+# print(function(2, 3))
+
+
+class MyDecorator:
+    def __init__(self, arg):
+        self.arg = arg
+
+    def __call__(self, func):
+        def wrap(a, b):
+            print('перед вызовом функции')
+            print(self.arg)
+            func(a, b)
+            print('после вызова функции')
+
+        return wrap
+
+
+@MyDecorator('test2')
+def function(a, b):
+    print(a, b)
+
+
+
+function(2, 5)
