@@ -190,31 +190,89 @@
 
 
 # data descriptor
-class NonNegative:
-    def __set_name__(self, owner, name):
-         self.__name = name
+# class NonNegative:
+#     def __set_name__(self, owner, name):
+#          self.__name = name
+#
+#     def __set__(self, instance, value):
+#         if value < 0:
+#             raise ValueError('Значение должно быть положительным')
+#         instance.__dict__[self.__name] = value
+#
+#     def __get__(self, instance, owner):
+#         return instance.__dict__[self.__name]
+#
+#
+# class Order:
+#     price = NonNegative()
+#     quantity = NonNegative()
+#
+#     def __init__(self, name, price, quantity):
+#         self.name = name
+#         self.price = price
+#         self.quantity = quantity
+#
+#     def total(self):
+#         return self.price * self.quantity
+#
+#
+# apple = Order('apple', 5, 10)
+# print(apple.total())
 
-    def __set__(self, instance, value):
-        if value < 0:
-            raise ValueError('Значение должно быть положительным')
-        instance.__dict__[self.__name] = value
 
-    def __get__(self, instance, owner):
-        return instance.__dict__[self.__name]
+# Метаклассы
+#
+# a = 5
+# print(type(a))
+# print(type(int))
 
 
-class Order:
-    price = NonNegative()
-    quantity = NonNegative()
+# class MyList(list):
+#     def get_length(self):
+#         return len(self)
+#
+#
+# lst = MyList()
+# lst.append(1)
+# lst.append(2)
+# lst[0] = 3
+# print(lst, lst.get_length())
 
-    def __init__(self, name, price, quantity):
+
+# MyList = type(
+#     'MyList',
+#     (list,),
+#     dict(get_length = lambda self: len(self))
+# )
+#
+# lst = MyList()
+# lst.append(1)
+# lst.append(2)
+# lst[0] = 3
+# print(lst, lst.get_length())
+
+
+class MyMetaclass(type):
+    def __new__(mcs, name, bases, attr):
+        print('Создание нового объекта', name)
+        return super(MyMetaclass, mcs).__new__(mcs, name, bases, attr)
+
+    def __init__(cls, name, bases, attr):
+        print('Инициализация класса', name)
+        super(MyMetaclass, cls).__init__(name, bases, attr)
+
+
+class Student(metaclass=MyMetaclass):
+    def __init__(self, name):
         self.name = name
-        self.price = price
-        self.quantity = quantity
 
-    def total(self):
-        return self.price * self.quantity
+    def get_name(self):
+        return self.name
 
 
-apple = Order('apple', 5, 10)
-print(apple.total())
+stud = Student('Анна')
+print(stud.get_name())
+print(type(stud))
+print(type(Student))
+
+
